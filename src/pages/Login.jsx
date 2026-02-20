@@ -10,7 +10,7 @@ export default function Login() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = async (e.FormEvent) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
@@ -29,73 +29,31 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-cyan-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8">
-        <div className="flex items-center justify-center mb-8">
-          <div className="bg-blue-600 p-3 rounded-xl">
-            <Heart className="w-8 h-8 text-white" />
-          </div>
-        </div>
+    <div className="min-h-screen flex items-center justify-center">
+      <form onSubmit={handleLogin} className="space-y-4 bg-white p-8 rounded-xl">
+        <Heart className="mx-auto text-blue-600" />
+        {error && <p className="text-red-600">{error}</p>}
 
-        <h1 className="text-3xl font-bold text-gray-900 text-center mb-2">Welcome Back</h1>
-        <p className="text-gray-600 text-center mb-8">Sign in to access your healthcare dashboard</p>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+          required
+        />
 
-        {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
-            {error}
-          </div>
-        )}
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+          required
+        />
 
-        <form onSubmit={handleLogin} className="space-y-6">
-          
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Email Address
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus-2 focus-blue-500 focus-transparent transition"
-              placeholder="you@example.com"
-              required
-            />
-          </div>
-
-          
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Password
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus-2 focus-blue-500 focus-transparent transition"
-              placeholder="••••••••"
-              required
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover-blue-700 transition disabled-50 disabled-not-allowed"
-          >
-            {loading ? 'Signing in...' : 'Sign In'}
-          </button>
-        </form>
-
-        <div className="mt-6 text-center">
-          <p className="text-gray-600">
-            Don't have an account?{' '}
-            <button
-              onClick={() => navigate('/signup')}
-              className="text-blue-600 hover-blue-700 font-semibold"
-            >
-              Sign up
-            </button>
-          </p>
-        </div>
-      </div>
+        <button disabled={loading}>
+          {loading ? 'Signing in…' : 'Sign In'}
+        </button>
+      </form>
     </div>
   );
 }

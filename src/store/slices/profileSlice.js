@@ -1,24 +1,18 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Profile } from '../../types';
-
-
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  profile,
-  loading,
+  profile: null,
+  loading: false,
 };
 
 const profileSlice = createSlice({
   name: 'profile',
   initialState,
-  reducers
-    setProfile: (state, action | null>) => {
+  reducers: {
+    setProfile(state, action) {
       state.profile = action.payload;
     },
-    setProfileLoading: (state, action) => {
-      state.loading = action.payload;
-    },
-    updateProfile: (state, action) => {
+    updateProfile(state, action) {
       if (state.profile) {
         state.profile = { ...state.profile, ...action.payload };
       }
@@ -26,5 +20,5 @@ const profileSlice = createSlice({
   },
 });
 
-export const { setProfile, setProfileLoading, updateProfile } = profileSlice.actions;
+export const { setProfile, updateProfile } = profileSlice.actions;
 export default profileSlice.reducer;

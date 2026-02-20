@@ -5,13 +5,10 @@ import appointmentReducer from './slices/appointmentSlice';
 import chatReducer from './slices/chatSlice';
 
 export const store = configureStore({
-  reducer
-    auth,
-    profile,
-    appointments,
-    chat,
+  reducer: {
+    auth: authReducer,
+    profile: profileReducer,
+    appointments: appointmentReducer,
+    chat: chatReducer,
   },
 });
-
-export 
-export 

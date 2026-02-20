@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { supabase } from '../lib/supabase';
-import { setProfile, setProfileLoading } from '../store/slices/profileSlice';
-import { RootState } from '../store/store';
+import { setProfile, updateProfile } from '../store/slices/profileSlice';
 
 export const useProfile = () => {
   const dispatch = useDispatch();
@@ -18,7 +17,7 @@ export const useProfile = () => {
   const fetchProfile = async () => {
     if (!user) return;
 
-    dispatch(setProfileLoading(true));
+    dispatch(updateProfile(true));
     const { data } = await supabase
       .from('profiles')
       .select('*')
@@ -28,7 +27,7 @@ export const useProfile = () => {
     if (data) {
       dispatch(setProfile(data));
     }
-    dispatch(setProfileLoading(false));
+    dispatch(updateProfile(false));
   };
 
   return { profile, fetchProfile };

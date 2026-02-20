@@ -5,26 +5,28 @@ import { setUser } from '../store/slices/authSlice';
 
 const AuthContext = createContext({});
 
-export const AuthProvider = ({ children } children.ReactNode }) => {
+export const AuthProvider = ({ children }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data session } }) => {
-      dispatch(setUser(session?.user as any ?? null));
+    supabase.auth.getSession().then(({ data }) => {
+      dispatch(setUser(data?.session?.user ?? null));
     });
 
-    const {
-      data subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      (async () => {
-        dispatch(setUser(session?.user as any ?? null));
-      })();
+    const { data } = supabase.auth.onAuthStateChange((_event, session) => {
+      dispatch(setUser(session?.user ?? null));
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      data.subscription.unsubscribe();
+    };
   }, [dispatch]);
 
-  return <AuthContext.Provider value={{}}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{}}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => useContext(AuthContext);

@@ -1,25 +1,22 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { User } from '../../types';
-
-
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  user,
-  loading,
+  user: null,
+  loading: true,
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers
-    setUser: (state, action | null>) => {
+  reducers: {
+    setUser(state, action) {
       state.user = action.payload;
       state.loading = false;
     },
-    setLoading: (state, action) => {
+    setLoading(state, action) {
       state.loading = action.payload;
     },
-    logout: (state) => {
+    logout(state) {
       state.user = null;
     },
   },
